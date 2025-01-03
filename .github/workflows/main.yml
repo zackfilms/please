@@ -1,0 +1,37 @@
+name: Run Web Scraper 6
+
+on:
+  workflow_dispatch:
+    inputs:
+      excel_file:
+        description: 'Excel file to process (default: chunk_1.xlsx)'
+        default: 'Yellow Pages Phase 1 Links.xlsx'
+        required: false
+
+jobs:
+  webscraper:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pandas requests beautifulsoup4 aiohttp openpyxl
+
+    - name: Run web scraper
+      run: |
+        python yellow-pages.py
+
+    - name: Upload output files
+      uses: actions/upload-artifact@v3
+      with:
+        name: output-files
+        path: "*.csv"

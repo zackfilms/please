@@ -326,9 +326,9 @@ def process_sheet2(file_path, column_name='Yellow Pages', sheet_name='Hospitalit
         return
 
     # Extract relevant columns
-    urls = data[column_name].dropna().tolist()[499:525]
-    industry = data['Industry'].tolist()[499:525]
-    job_title = data['Job Title'].tolist()[499:525]
+    urls = data[column_name].dropna().tolist()[499:524]
+    industry = data['Industry'].tolist()[499:524]
+    job_title = data['Job Title'].tolist()[499:524]
 
     # Process each URL
     for idx, (url, industry, job_title) in enumerate(zip(urls, industry, job_title), start=500):

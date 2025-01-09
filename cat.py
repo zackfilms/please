@@ -4,9 +4,11 @@ from bs4 import BeautifulSoup
 import os
 from concurrent.futures import ThreadPoolExecutor
 
-# Folder containing the CSV files
+# Folder containing the CSV files (input files)
 folder_path = '.'
-output_file_path = os.path.join(output_folder, file_name)
+
+# Folder for saving processed output files
+output_folder = './processed_files'
 os.makedirs(output_folder, exist_ok=True)
 
 # Define a function to get the category from a link
@@ -34,6 +36,7 @@ def get_category_from_link(link):
         print(f"Error fetching category: {e}")
         return f"Error: {e}"
 
+# Function to process a single file
 def process_file(file_name):
     print(f"Processing file: {file_name}")
     file_path = os.path.join(folder_path, file_name)

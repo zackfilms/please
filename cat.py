@@ -6,7 +6,7 @@ from concurrent.futures import ThreadPoolExecutor
 
 # Folder containing the CSV files
 folder_path = '.'
-output_folder = '.'
+output_file_path = os.path.join(output_folder, file_name)
 os.makedirs(output_folder, exist_ok=True)
 
 # Define a function to get the category from a link
@@ -51,7 +51,7 @@ def process_file(file_name):
         return
 
     # Process only the first 5 rows for testing
-    sample_data = data.head(5)
+    sample_data = data.head(5).copy()
 
     # Add a 'Category' column by fetching categories from links
     sample_data['Category'] = sample_data['Link'].apply(get_category_from_link)

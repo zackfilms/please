@@ -5,8 +5,8 @@ import os
 from concurrent.futures import ThreadPoolExecutor
 
 # Folder containing the CSV files
-folder_path = '/Users/adamibraheem/Downloads/fix_location/output_merged_child'
-output_folder = '/Users/adamibraheem/Downloads/fix_location/output_merged_child'
+folder_path = '.'
+output_folder = '.'
 os.makedirs(output_folder, exist_ok=True)
 
 # Define a function to get the category from a link

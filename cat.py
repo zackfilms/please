@@ -34,7 +34,6 @@ def get_category_from_link(link):
         print(f"Error fetching category: {e}")
         return f"Error: {e}"
 
-# Process a single file
 def process_file(file_name):
     print(f"Processing file: {file_name}")
     file_path = os.path.join(folder_path, file_name)
@@ -42,23 +41,26 @@ def process_file(file_name):
     # Load the CSV file
     data = pd.read_csv(file_path)
 
-    # Ensure the required columns exist
+    # Display first few rows to confirm the input
+    print("Sample of the input file:")
+    print(data.head())
+
+    # Check for necessary columns
     if 'Link' not in data.columns or 'Business Name' not in data.columns:
-        print(f"Skipping {file_name}: Required columns 'Link' or 'Business Name' are missing.")
+        print(f"File {file_name} is missing required columns.")
         return
 
-    # Extract categories using ThreadPoolExecutor for parallelism
-    with ThreadPoolExecutor(max_workers=10) as executor:
-        data['Category'] = list(executor.map(get_category_from_link, data['Link']))
+    # Process only the first 5 rows for testing
+    sample_data = data.head(5)
 
-    # Append the category next to the business name
-    data['Business Name with Category'] = data['Business Name'] + ' - ' + data['Category'].fillna('No Category')
+    # Add a 'Category' column by fetching categories from links
+    sample_data['Category'] = sample_data['Link'].apply(get_category_from_link)
 
-    # Save the updated DataFrame to a new CSV file
-    output_file = os.path.join(output_folder, file_name)
-    data.to_csv(output_file, index=False)
+    # Save the processed data
+    output_file_path = os.path.join(output_folder, file_name)
+    sample_data.to_csv(output_file_path, index=False)
+    print(f"Processed sample saved to: {output_file_path}")
 
-    print(f"Finished processing {file_name}. Output saved to {output_file}\n")
 
 # Process all files in the folder
 csv_files = [f for f in os.listdir(folder_path) if f.endswith('.csv')]

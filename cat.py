@@ -8,7 +8,7 @@ from concurrent.futures import ThreadPoolExecutor
 folder_path = '.'
 
 # Folder for saving processed output files
-output_folder = './processed_files'
+output_folder = '.'
 os.makedirs(output_folder, exist_ok=True)
 
 # Define a function to get the category from a link
